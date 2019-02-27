@@ -506,6 +506,35 @@ namespace vizdoom {
                 continue;
             }
 
+            if (key == "custom_game_objects") {
+                std::vector<std::string> strNames;
+                int start_line = lineNumber;
+                bool parseSuccess = ConfigLoader::parseListProperty(lineNumber, val, file, strNames);
+                if (parseSuccess) {
+                    unsigned int i = 0;
+                    try {
+                        for (i = 0; i < strNames.size(); ++i) {
+                            std::cout << "Loaded Custom Object Name " << strNames[i];
+                            this->game->addCustomObjectName(strNames[i]);
+                        }
+                    }
+                    catch (std::exception) {
+                        std::cerr << "WARNING! Loading config from: \"" << filePath <<
+                                  "\". Unsupported value in lines " << start_line << "-" << lineNumber << ": " <<
+                                  strNames[i] << ". Lines ignored.\n";
+
+                        success = false;
+                    }
+                } else {
+                    std::cerr << "WARNING! Loading config from: \"" << filePath << "\". Syntax error in lines " <<
+                              start_line << "-" << lineNumber << ". Lines ignored.\n";
+
+                    success = false;
+                }
+
+                continue;
+            }
+
             /* Parse game args which are string but enables "+=" */
             if (key == "game_args" || key == "game_args") {
                 if (!append) {

@@ -76,6 +76,7 @@ namespace vizdoom {
 
     struct SMObject {
         unsigned int id;
+        unsigned int customType;
         double position[9];
         char name[MAX_NAME_LENGTH];
     };

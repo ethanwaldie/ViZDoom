@@ -172,6 +172,7 @@ namespace vizdoom {
         void setObjectsInfoEnabled(bool objectsInfo);
         bool isSectorsInfoEnabled();
         void setSectorsInfoEnabled(bool sectorsInfo);
+        void addCustomObjectName(std::string name);
 
         /* Render options */
         void setRenderHud(bool hud);
@@ -217,6 +218,8 @@ namespace vizdoom {
         std::vector<Button> availableButtons;
         std::vector<double> lastAction;
         std::vector<double> nextAction;
+
+        std::vector<std::string> customObjectNames;
 
         unsigned int nextStateNumber;
         unsigned int lastMapTic;

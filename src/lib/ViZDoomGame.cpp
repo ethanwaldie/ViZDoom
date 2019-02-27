@@ -280,9 +280,18 @@ namespace vizdoom {
                 //size_t objectPartSize = offsetof(struct Object, objectName) - offsetof(struct Object, objectId);
                 size_t objectPartSize = offsetof(struct Object, name) - offsetof(struct Object, positionX);
                 for (unsigned int i = 0; i < smState->OBJECT_COUNT; ++i) {
+
                     this->state->objects.emplace_back();
                     std::memcpy(&this->state->objects.back().positionX, &smState->OBJECT[i].position[0], objectPartSize);
-                    this->state->objects.back().name = std::string(smState->OBJECT[i].name);
+                    
+                    // Here we set the name of the object by looking at the tag
+
+                    if (std::string(smState->OBJECT[i].name) == "Unknown" && smState->OBJECT[i].customType != 0) {
+                        //std::cout << "Index " << smState->OBJECT[i].customType << " Name " << std::string(this->customObjectNames[smState->OBJECT[i].customType - 1]) << "\n";
+                        this->state->objects.back().name = std::string(this->customObjectNames[smState->OBJECT[i].customType - 1]);
+                    } else {
+                        this->state->objects.back().name = std::string(smState->OBJECT[i].name);
+                    }
 
                     /*
                     Object object;
@@ -644,6 +653,13 @@ namespace vizdoom {
 
     void DoomGame::loadState(std::string filePath){
         this->doomController->loadGame(filePath);
+    }
+
+    void DoomGame::addCustomObjectName(std::string name) {
+        this->customObjectNames.push_back(name);
+        std::cout << name << "\n";
+        for(int i=0; i<this->customObjectNames.size(); ++i)
+            std::cout << this->customObjectNames[i] << ' ';
     }
 }
 

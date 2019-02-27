@@ -487,6 +487,8 @@ void VIZ_GameStateUpdateObjects(){
 
             VIZ_CopyActorName(actor, vizObject->name);
 
+            vizObject->customType = actor->args[0];
+
             vizObject->position[0] = VIZ_FixedToDouble(actor->__pos.x);
             vizObject->position[1] = VIZ_FixedToDouble(actor->__pos.y);
             vizObject->position[2] = VIZ_FixedToDouble(actor->__pos.z);

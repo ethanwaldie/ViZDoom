@@ -81,6 +81,7 @@ struct VIZLabel{
 
 struct VIZObject{
     unsigned int id;
+    unsigned int customType;
     double position[9];
     char name[VIZ_MAX_NAME_LEN];
 };
